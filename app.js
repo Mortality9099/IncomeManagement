@@ -13,7 +13,11 @@ const conn = mongoose.connect(dbUrl)
   .catch((error) => console.error('MongoDB connection error:', error));
 
 
+require('./models/user')
+require('./models/transaction')
 var app = express();
+
+const authentication = require('./middlewares/authentication'); // Assuming middleware file path
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,7 +29,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter);
+// router.use('/', indexRouter); for authentication
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

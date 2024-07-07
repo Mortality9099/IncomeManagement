@@ -1,0 +1,25 @@
+extends layout
+
+block content
+
+    form(action=`/note/search/`, method='GET')
+        input.inpTxt(type="text" name="author" placeholder="Search by Author")
+        input(type="submit" value="Submit")
+
+    table.noteList
+        th="Remove"
+        th="Edit"
+        th="Amount"
+        th="Name"
+        th="Date"
+        tr  
+        each expense in expense_list
+            td
+                a(href=`/expense/delete/${expense.id}`)="Remove"
+            td
+                a(href=`/expense/edit/${expense.id}`)="Edit"
+            td
+              a(href=`/note/view/${expense.id}`)="View"
+            td=expense.title 
+            td=expense.date
+            tr
