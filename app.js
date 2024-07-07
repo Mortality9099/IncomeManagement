@@ -17,8 +17,6 @@ require('./models/user')
 require('./models/transaction')
 var app = express();
 
-const authentication = require('./middlewares/authentication'); // Assuming middleware file path
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
@@ -29,7 +27,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-// router.use('/', indexRouter); for authentication
+app.use('/', indexRouter); 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
