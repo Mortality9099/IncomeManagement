@@ -9,6 +9,7 @@
   },
   "dependencies": {
     "cookie-parser": "~1.4.4",
+    "crypto": "^1.0.1",
     "debug": "~2.6.9",
     "express": "^4.19.2",
     "express-async-handler": "^1.2.0",

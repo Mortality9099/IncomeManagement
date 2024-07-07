@@ -3,9 +3,19 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const crypto = require('crypto');
+const session = require('express-session');
+
+function generateSecretKey() {
+  const secretKeyLength = 32; // Recommended key length (in bytes)
+  const buffer = crypto.randomBytes(secretKeyLength);
+  return buffer.toString('base64');
+}
+
 
 const mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
+var loginRouter = require('./routes/login')
 
 const dbUrl = 'mongodb://127.0.0.1:27017/test';
 const conn = mongoose.connect(dbUrl)
@@ -13,9 +23,15 @@ const conn = mongoose.connect(dbUrl)
   .catch((error) => console.error('MongoDB connection error:', error));
 
 
-require('./models/user')
-require('./models/transaction')
 var app = express();
+
+app.use(session({
+  secret: generateSecretKey() , // Replace with a strong secret key
+  resave: false,
+  saveUninitialized: true,
+  cookie: { secure: false } // Set to true if using HTTPS in production
+}));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -28,6 +44,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter); 
+app.use('/login', loginRouter); 
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
