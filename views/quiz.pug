@@ -1,0 +1,19 @@
+extends layout
+
+block content
+  form(action="/test/answer", method="post")
+    div 
+      p Question 1:
+      p=q1.question
+      div
+        input(type='hidden' name='id1' value=q1.id)
+
+        input(type='text' name='answer1' style='width:15vw')
+      br
+      p Question 2:
+      p=q2.question
+      div
+        input(type='hidden' name='id2' value=q2.id)
+        input(type='text' name='answer2' style='width:15vw')
+      div(class='')
+          input(type='submit' value='Answer' style='margin-top:20px') 
