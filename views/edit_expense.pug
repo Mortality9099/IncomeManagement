@@ -1,0 +1,22 @@
+extends layout
+
+block content
+    
+    form.container(style="flex-direction: column; gap:20px;" action=`/expenses/edit/${expense._id}`, method='POST')
+        h3="Name:"
+        input.inpTxt(type="text" name="name" value=expense.name)
+        h3="Amount:"
+        span(style="display:flex; gap:10px")
+            label(for="amount")="$"
+            input.inpTxt(style="width:3vw" value=expense.amount type="number" name="amount" min="0" step=".01")
+        h3="Type:"
+        select(name="type")
+            option(value="income" selected=(expense.type === "income" ? "selected" : ""))='Income'
+            option(value="expenditure" selected=(expense.type === "expenditure" ? "selected" : ""))='Expenditure'
+        h3="Categroy:"
+        select(name="category")
+            option(value="Default")="Default"
+            each category in user_categories
+                option(value=category selected=(expense.category === category ? "selected" : ""))=category
+
+        input.btn(type="submit" value="Submit")

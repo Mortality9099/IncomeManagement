@@ -7,6 +7,7 @@ block content
         th="Edit"
         th="Amount"
         th="Name"
+        th="Type"
         th="Category"
         th="Date"
         tr  
@@ -17,6 +18,7 @@ block content
                 a(href=`/expenses/edit/${expense._id}`)="Edit"
             td=`\$${expense.amount}`
             td=expense.name 
+            td=expense.type
             td=expense.category
-            td=expense.date
+            td=expense.date.toLocaleString("en-US")
             tr
