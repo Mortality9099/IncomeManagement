@@ -15,7 +15,7 @@ block content
                 a(href=`/expenses/delete/${expense._id}`)="Remove"
             td
                 a(href=`/expenses/edit/${expense._id}`)="Edit"
-            td=expense.amount
+            td=`\$${expense.amount}`
             td=expense.name 
             td=expense.category
             td=expense.date
