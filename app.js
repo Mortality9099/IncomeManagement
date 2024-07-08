@@ -18,6 +18,7 @@ const mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
 var expenseRouter = require('./routes/expenses');
 var loginRouter = require('./routes/login');
+var logoutRouter = require('./routes/logout')
 
 const dbUrl = 'mongodb://127.0.0.1:27017/test';
 const conn = mongoose.connect(dbUrl)
@@ -47,6 +48,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter); 
 app.use('/login', loginRouter); 
+app.use('/logout', logoutRouter); 
 app.use('/expenses', expenseRouter); 
 
 

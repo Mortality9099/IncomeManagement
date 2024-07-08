@@ -1,5 +1,7 @@
 body {
   display:flex;
+  flex-direction: column;
+  gap: 5vh;
   padding: 50px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   justify-content: center;

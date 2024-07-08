@@ -1,7 +1,11 @@
 extends layout
 
 block content
-
+    a(href="/expenses/add")
+        input.btn(style="cursor:pointer; height: 5vh; width: 10vw; text-align:center;" type="button" value="Add New Expense")
+    a(href="/logout")
+        input.btn(style="cursor:pointer; height: 5vh; width: 10vw; text-align:center;" type="button" value="Log Out")
+      
     table.noteList
         th="Remove"
         th="Edit"
