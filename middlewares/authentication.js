@@ -13,8 +13,6 @@ const authMiddleWare = async (req, res, next) => {
 
     req.current_user = current_user;
 
-
-
     next();
 };
 

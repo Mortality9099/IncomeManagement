@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     const user = await User.findOne({ email: email });
 
     if (!user || user.password != password) {
-      return res.status(401).render('login', { errorMessage: 'Invalid credentials' });
+      return res.status(401).render('login', { errorMessage: 'Invalid credentials', successMessage: req.session.successMessage});
     }
 
     req.session.userId = user._id; // Store user ID in session

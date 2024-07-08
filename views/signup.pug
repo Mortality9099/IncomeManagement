@@ -1,16 +1,16 @@
 extends layout 
 
 block content 
-    form.container(style="flex-direction: column; gap:20px;"  method="POST", action="/login")
+    form.container(style="flex-direction: column; gap:20px;"  method="POST", action="/signup")
         if errorMessage
         label(style="color: #aa5545") #{errorMessage}
         if successMessage 
         label(style="color: #24aa42") #{successMessage}       
         br
+        label(for="username") Username:
+        input.inpTxt(type="username" id="username" name="username" required)
         label(for="email") Email:
         input.inpTxt(type="email" id="email" name="email" required)
         label(for="password") Password:
         input.inpTxt(type="password" id="password" name="password" required)
-        button.btn(style="height:5vh; width:10vw;" type="submit") Login
-        p="Dont Have an Account?"
-            a(href="/signup")=" Sign Up!"
+        button.btn(style="height:5vh; width:10vw;" type="submit") Sign Up

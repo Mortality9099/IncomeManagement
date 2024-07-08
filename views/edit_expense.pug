@@ -4,7 +4,7 @@ block content
     
     form.container(style="flex-direction: column; gap:20px;" action=`/expenses/edit/${expense._id}`, method='POST')
         h3="Name:"
-        input.inpTxt(type="text" name="name" value=expense.name)
+        input.inpTxt(type="text" name="name" value=expense.name required)
         h3="Amount:"
         span(style="display:flex; gap:10px")
             label(for="amount")="$"
