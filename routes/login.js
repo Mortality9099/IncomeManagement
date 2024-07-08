@@ -8,8 +8,8 @@ router.get('/', (req, res) => {
         return res.redirect('/');
     }
 
-    res.render('login');
-});
+    res.render('login', {successMessage: req.session.successMessage});
+}); 
 
 router.post('/', async (req, res) => {
   const { email, password } = req.body;
@@ -18,7 +18,7 @@ router.post('/', async (req, res) => {
     const user = await User.findOne({ email: email });
 
     if (!user || user.password != password) {
-      return res.status(401).render('login', { errorMessage: 'Invalid credentials', successMessage: req.session.successMessage});
+      return res.status(401).render('login', { errorMessage: 'Invalid credentials'});
     }
 
     req.session.userId = user._id; // Store user ID in session
