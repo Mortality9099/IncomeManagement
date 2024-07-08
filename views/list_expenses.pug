@@ -2,24 +2,21 @@ extends layout
 
 block content
 
-    form(action=`/note/search/`, method='GET')
-        input.inpTxt(type="text" name="author" placeholder="Search by Author")
-        input(type="submit" value="Submit")
-
     table.noteList
         th="Remove"
         th="Edit"
         th="Amount"
         th="Name"
+        th="Category"
         th="Date"
         tr  
         each expense in expense_list
             td
-                a(href=`/expense/delete/${expense.id}`)="Remove"
+                a(href=`/expenses/delete/${expense._id}`)="Remove"
             td
-                a(href=`/expense/edit/${expense.id}`)="Edit"
-            td
-              a(href=`/note/view/${expense.id}`)="View"
-            td=expense.title 
+                a(href=`/expenses/edit/${expense._id}`)="Edit"
+            td=expense.amount
+            td=expense.name 
+            td=expense.category
             td=expense.date
             tr

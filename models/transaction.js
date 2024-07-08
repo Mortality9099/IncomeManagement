@@ -8,8 +8,10 @@ const TransactionSchema = new mongoose.Schema({
         type: Number,
         required: true,
       },
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+    category: {type: String, default: "Default"}
 });
 
 const Transaction = mongoose.model('Transaction', TransactionSchema);
+
 module.exports = Transaction;

@@ -13,9 +13,11 @@ function generateSecretKey() {
 }
 
 
+
 const mongoose = require('mongoose');
 var indexRouter = require('./routes/index');
-var loginRouter = require('./routes/login')
+var expenseRouter = require('./routes/expenses');
+var loginRouter = require('./routes/login');
 
 const dbUrl = 'mongodb://127.0.0.1:27017/test';
 const conn = mongoose.connect(dbUrl)
@@ -45,6 +47,8 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter); 
 app.use('/login', loginRouter); 
+app.use('/expenses', expenseRouter); 
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -61,5 +65,6 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
 
 module.exports = app;
