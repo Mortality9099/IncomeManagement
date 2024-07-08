@@ -12,10 +12,10 @@ router.get('/', (req, res) => {
 }); 
 
 router.post('/', async (req, res) => {
-  const { email, password } = req.body;
+  const { user_login, password } = req.body;
 
   try {
-    const user = await User.findOne({ email: email });
+    const user = await User.findOne({$or: [{'email': user_login}, {'username': user_login}]});
 
     if (!user || user.password != password) {
       return res.status(401).render('login', { errorMessage: 'Invalid credentials'});
