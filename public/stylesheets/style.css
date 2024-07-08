@@ -22,12 +22,10 @@ a {
   border: 2px solid #888888;
   border-radius: 10px;
   width:50vw;
-  height: 40vh;
   display: flex;
   flex-direction: row;
   gap: 10vw;
   padding: 50px;
-
   align-items: center;
   justify-content: center;
 }
@@ -44,7 +42,7 @@ a {
   color: whitesmoke;
   font-size: large;
   border-radius: 10px;
-  height:10vh;
+  height:5vh;
   width:10vw; 
 }
 

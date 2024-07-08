@@ -23,7 +23,7 @@ block content
                 a(href=`/expenses/delete/${expense._id}`)="Remove"
             td
                 a(href=`/expenses/edit/${expense._id}`)="Edit"
-            td=`\$${expense.amount}`
+            td(style=expense.type =="income" ? "color: #aa2442" : "color: #24aa42")=`\$${expense.amount}`
             td=expense.name 
             td=expense.type
             td=expense.category
