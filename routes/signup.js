@@ -7,7 +7,7 @@ router.get('/', (req, res) => {
     if (req.session.userId) {
         return res.redirect('/');
     }
-
+    delete req.current_user;
     res.render('signup');
 });
 

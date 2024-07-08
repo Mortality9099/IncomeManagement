@@ -8,10 +8,12 @@ const authMiddleWare = async (req, res, next) => {
 
     current_user = await User.findOne({ _id : req.session.userId }).exec();
 
-    if(!current_user)
+    if(!current_user){
+        delete req.current_user;
         return res.redirect('/login');
-
-    req.current_user = current_user;
+    }
+    else
+        req.current_user = current_user;
 
     next();
 };

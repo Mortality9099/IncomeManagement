@@ -1,8 +1,7 @@
 body {
   display:flex;
-  flex-direction: column;
-  gap: 5vh;
-  padding: 50px;
+  flex-direction: row;
+  padding: 20px;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
   justify-content: center;
   align-items: center;
@@ -23,8 +22,8 @@ a {
   border-radius: 10px;
   width:50vw;
   display: flex;
-  flex-direction: row;
-  gap: 10vw;
+  flex-direction: column;
+  gap: 10px;
   padding: 50px;
   align-items: center;
   justify-content: center;

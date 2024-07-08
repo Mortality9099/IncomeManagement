@@ -8,6 +8,9 @@ router.get('/', (req, res) => {
         return res.redirect('/');
     }
 
+    delete req.current_user;
+    delete current_user;
+
     res.render('login', {successMessage: req.session.successMessage});
 }); 
 

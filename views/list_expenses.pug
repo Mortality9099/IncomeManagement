@@ -1,31 +1,36 @@
 extends layout
 
 block content
-    a(href="/expenses/add")
-        input.btn(style="background-color: #225522; cursor:pointer; height: 5vh; width: 10vw; text-align:center;" type="button" value="Add New Expense")
-    a(href="/logout")
-        input.btn(style="cursor:pointer; height: 5vh; width: 10vw; text-align:center;" type="button" value="Log Out")
-    if errorMessage
-    label(style="color: #aa5545") #{errorMessage}
-    if successMessage 
-    label(style="color: #24aa42") #{successMessage}          
-    table.expenseList
-        th="Remove"
-        th="Edit"
-        th="Amount"
-        th="Name"
-        th="Type"
-        th="Category"
-        th="Date"
-        tr  
-        each expense in expense_list
-            td
-                a(href=`/expenses/delete/${expense._id}`)="Remove"
-            td
-                a(href=`/expenses/edit/${expense._id}`)="Edit"
-            td(style=expense.type =="income" ? "color: #aa2442" : "color: #24aa42")=`\$${expense.amount}`
-            td=expense.name 
-            td=expense.type
-            td=expense.category
-            td=expense.date.toLocaleString("en-US")
-            tr
+    div.container
+        a(href="/expenses/add")
+            input.btn(style="background-color: #225522; cursor:pointer; height: 5vh; width: 10vw; text-align:center;" type="button" value="Add New Expense")
+        a(href="/logout")
+            input.btn(style="cursor:pointer; height: 5vh; width: 10vw; text-align:center;" type="button" value="Log Out")
+        if errorMessage
+        label(style="color: #aa5545") #{errorMessage}
+        if successMessage 
+        label(style="color: #24aa42") #{successMessage}          
+        table.expenseList
+            th="Remove"
+            th="Edit"
+            th="Amount"
+            th="Name"
+            th="Type"
+            th="Category"
+            th="Date"
+            tr  
+            each expense in expense_list
+                td
+                    a(href=`/expenses/delete/${expense._id}`)="Remove"
+                td
+                    a(href=`/expenses/edit/${expense._id}`)="Edit"
+                if expense.type === "income"
+                        td(style="color: #24aa42" : "color: #24aa42")=`\$${expense.amount}`
+                else 
+                        td(style="color: #aa2442" : "color: #24aa42")=`\$${expense.amount}`    
+                                
+                td=expense.name 
+                td=expense.type
+                td=expense.category
+                td=expense.date.toLocaleString("en-US")
+                tr
