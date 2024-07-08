@@ -12,7 +12,7 @@ router.get('/', function(req, res, next) {
 
 router.get('/list', authMiddleWare, async function(req, res, next) {
 
-  user_transactions = await Transaction.find({user : req.current_user}).exec();
+  user_transactions = await Transaction.find({user : req.current_user}).sort('date').exec();
   console.log(req.session.successMessage);
   res.render('list_expenses', { title: 'Expenses List',  successMessage: req.session.successMessage, expense_list : user_transactions, errorMessage: req.session.errorMessage});
 });
