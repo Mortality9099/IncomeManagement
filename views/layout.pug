@@ -4,4 +4,6 @@ html
     title= title
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    if current_user 
+      h2(style="text-align:left; align-content:left; width:100%;")=`${current_user.username}'s Expense List`
     block content
