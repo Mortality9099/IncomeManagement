@@ -10,11 +10,11 @@ html
       div(style="width:25%")
         h2(style="text-align:left; align-content:left; width:100%;")=`${current_user.username}'s Expense List`
         h2(style="text-align:left; align-content:left; width:100%;")="Total Balance: "
-          if current_user.total_balance > 0.0
+          if current_user.total_balance.toFixed(2) > 0.0
             span(style="color: #24aa42")=`+$${current_user.total_balance.toFixed(2)}`
-          else if current_user.total_balance < 0.0 
+          else if current_user.total_balance.toFixed(2) < 0.0 
             span(style="color: #aa5545")=`$${current_user.total_balance.toFixed(2)}`
           else 
-            span(style="color: whitesmoke")=`$${current_user.total_balance.toFixed(2)}`
+            span(style="color: whitesmoke")=`$0.00`
 
     block content
