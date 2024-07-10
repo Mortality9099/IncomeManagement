@@ -2,7 +2,7 @@ extends layout
 
 block content
     
-    form.container(style="flex-direction: column; gap:20px;" action=`/expenses/add/`, method='POST')
+    form.container(style="flex-direction: column; gap:20px;" action=`/expense/add/`, method='POST')
         h3="Name:"
         input.inpTxt(type="text" name="name" required)
         h3="Amount:"

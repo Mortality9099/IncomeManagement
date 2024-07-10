@@ -1,30 +1,23 @@
-var express = require('express');
-var router = express.Router();
-const authMiddleWare = require('../middlewares/authentication');
+const asyncHandler = require("express-async-handler");
 const Transaction = require('../models/transaction')
 
-/* GET home page. */
+exports.index = asyncHandler(async (req, res, next) => {
+  res.redirect('/expense/list');
+})
 
-router.get('/', function(req, res, next) {
-
-  res.redirect('/expenses/list');
-});
-
-router.get('/list', authMiddleWare, async function(req, res, next) {
-
+exports.list = asyncHandler(async function(req, res, next) {
   user_transactions = await Transaction.find({user : req.current_user}).sort('-date').exec();
   console.log(req.session.successMessage);
-  res.render('list_expenses', { title: 'Expenses List',  successMessage: req.session.successMessage, expense_list : user_transactions, errorMessage: req.session.errorMessage});
-});
+  res.render('list_expense', { title: 'Expenses List',  successMessage: req.session.successMessage, expense_list : user_transactions, errorMessage: req.session.errorMessage});
+})
 
-router.get('/add', authMiddleWare, function(req, res, next) {
-
+exports.add_get = asyncHandler(async (req, res, next) => {
   user_categories = req.current_user.categories;
   res.render('add_expense', { title: 'Add Expense', user_categories: user_categories});
-});
+})
 
-router.post('/add', authMiddleWare, function(req, res, next) {
-
+exports.add_post = asyncHandler(async (req, res, next) => {
+  
   try {
     expense = new Transaction;
     expense.name = req.body.name; 
@@ -37,15 +30,15 @@ router.post('/add', authMiddleWare, function(req, res, next) {
     expense.save();
     req.current_user.save();
     req.session.successMessage = "Expense Added Sucessfully!";  
-  }catch {
+  } catch {
     req.session.errorMessage = "Problem Occured Adding Expense!";
   }
 
-  res.redirect('/expenses/list');
-});
+  res.redirect('/expense/list');
+})
 
-router.get('/delete/:id', authMiddleWare, async function(req, res, next) {
-
+exports.delete = asyncHandler(async (req, res, next) => {
+  
   try {
 
     expense = await Transaction.findOne({user: req.current_user, _id : req.params.id}).exec();
@@ -57,23 +50,22 @@ router.get('/delete/:id', authMiddleWare, async function(req, res, next) {
     req.session.errorMessage = "Problem Occured Deleting Expense!";
   }
 
-  res.redirect('/expenses/list');
+  res.redirect('/expense/list');
 });
 
-router.get('/edit/:id', authMiddleWare, async function(req, res, next) {
-
+exports.edit_get = asyncHandler(async (req, res, next) => {
+  
   expense = await Transaction.findOne({user: req.current_user, _id : req.params.id}).exec();
   user_categories = req.current_user.categories;
 
   if(expense)
     res.render('edit_expense', { title: 'Edit Expense', user_categories: user_categories, expense: expense});
   else
-    res.redirect('/expenses/list');
-});
+    res.redirect('/expense/list');
+})
 
-router.post('/edit/:id', authMiddleWare, async function(req, res, next) {
-
-  console.log(req.current_user);
+exports.edit_post = asyncHandler(async (req, res, next) => {
+  
   expense = await Transaction.findOne({user: req.current_user, _id : req.params.id}).exec();
   if(expense){
       req.current_user.total_balance -= expense.type == "income" ? expense.amount : -expense.amount;
@@ -92,9 +84,5 @@ router.post('/edit/:id', authMiddleWare, async function(req, res, next) {
     req.session.errorMessage = "Problem Occured Editing Expense!";
   }
 
-  res.redirect('/expenses/list');
-});
-
-
-
-module.exports = router;
+  res.redirect('/expense/list');
+})

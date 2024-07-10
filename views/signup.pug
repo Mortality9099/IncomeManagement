@@ -1,7 +1,7 @@
 extends layout 
 
 block content 
-    form.container(style="flex-direction: column; gap:20px;"  method="POST", action="/signup")
+    form.container(style="flex-direction: column; gap:20px;"  method="POST", action="/user/signup")
         if errorMessage
         label(style="color: #aa5545") #{errorMessage}
         if successMessage 
@@ -15,4 +15,4 @@ block content
         input.inpTxt(type="password" id="password" name="password" required)
         button.btn( type="submit") Sign Up
         p="Already Signed Up?"
-            a(href="/login")=" Log In!"
+            a(href="/user/login")=" Log In!"

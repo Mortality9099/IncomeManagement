@@ -12,16 +12,12 @@ function generateSecretKey() {
   return buffer.toString('base64');
 }
 
-
-
 const mongoose = require('mongoose');
-var indexRouter = require('./routes/index');
-var expenseRouter = require('./routes/expenses');
-var loginRouter = require('./routes/login');
-var logoutRouter = require('./routes/logout')
-var signUpRouter = require('./routes/signup')
+var expenseRouter = require('./routes/expense');
+var userRouter = require('./routes/user')
+var homeRouter = require('./routes/home');
 
-const dbUrl = 'mongodb://127.0.0.1:27017/test';
+const dbUrl = 'mongodb://127.0.0.1:27017/Project';
 const conn = mongoose.connect(dbUrl)
   .then(() => console.log('Connected to MongoDB'))
   .catch((error) => console.error('MongoDB connection error:', error));
@@ -47,11 +43,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', indexRouter); 
-app.use('/login', loginRouter); 
-app.use('/signup', signUpRouter); 
-app.use('/logout', logoutRouter); 
-app.use('/expenses', expenseRouter); 
+app.use('/', homeRouter); 
+app.use('/expense', expenseRouter); 
+app.use('/user', userRouter); 
 
 
 // catch 404 and forward to error handler

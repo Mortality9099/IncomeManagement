@@ -2,7 +2,7 @@ extends layout
 
 block content
     div.container
-        a(href="/expenses/add")
+        a(href="/expense/add")
             input.btn(style="font-size:3vh; background-color: #225522; cursor:pointer; height: 5vh; width: 5vh; text-align:center;" type="button" value="+")
         if errorMessage
         label(style="color: #aa5545") #{errorMessage}
@@ -19,11 +19,11 @@ block content
             tr  
             each expense in expense_list
                 td
-                    a(href=`/expenses/delete/${expense._id}`)
+                    a(href=`/expense/delete/${expense._id}`)
                         span(style="font-size:1vw") &#x1F5D1
                     
                 td
-                    a(href=`/expenses/edit/${expense._id}`)
+                    a(href=`/expense/edit/${expense._id}`)
                         span(style="font-size:2vw; color: #aaaa25;") &#9998;
                 if expense.type === "income"
                         td(style="color: #24aa42" : "color: #24aa42")=`\$${expense.amount}`
@@ -35,5 +35,5 @@ block content
                 td=expense.category
                 td=expense.date.toLocaleString("en-US")
                 tr
-        a(href="/logout")
+        a(href="/user/logout")
             input.btn(style="cursor:pointer; height: 5vh; width: 10vw; text-align:center;" type="button" value="Log Out")
