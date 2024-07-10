@@ -2,8 +2,21 @@ extends layout
 
 block content
     div.container
-        a(href="/expense/add")
-            input.btn(style="font-size:3vh; background-color: #225522; cursor:pointer; height: 5vh; width: 5vh; text-align:center;" type="button" value="+")
+        form(action='/expense/list' method='post' class="Search_Box")
+            label(for="fromDate") From Date 
+            input(type="month" name="fromDate" value=fromDate)
+            label(for="toDate") To Date
+            input(type="month" name="toDate" value=toDate)
+            label(for="category") Category
+            input(type="text" name="category" value=category)
+            label(for="transactionType") Transaction Type
+            select(name="transactionType")
+                option(value="") Select an option
+                option(value="income" selected=(transactionType === 'income')) Income
+                option(value="expenditure" selected=(transactionType === 'expenditure')) Expenditure
+            br
+            input(type="submit" value="Search")
+
         if errorMessage
         label(style="color: #aa5545") #{errorMessage}
         if successMessage 
@@ -35,5 +48,14 @@ block content
                 td=expense.category
                 td=expense.date.toLocaleString("en-US")
                 tr
+            tfoot 
+                tr 
+                    td=total_income
+                    td Total Income 
+                    td=total_expenditure
+                    td Total expenditure
+
+        a(href="/expense/add")
+            input.btn(style="font-size:3vh; background-color: #225522; cursor:pointer; height: 5vh; width: 5vh; text-align:center;" type="button" value="+")
         a(href="/user/logout")
             input.btn(style="cursor:pointer; height: 5vh; width: 10vw; text-align:center;" type="button" value="Log Out")

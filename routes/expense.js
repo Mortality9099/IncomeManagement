@@ -8,6 +8,7 @@ const controller = require('../controllers/expenseController');
 router.get('/', authMiddleWare, controller.index);
 
 router.get('/list', authMiddleWare, controller.list);
+router.post('/list', authMiddleWare, controller.list_post);
 
 router.get('/add', authMiddleWare, controller.add_get);
 

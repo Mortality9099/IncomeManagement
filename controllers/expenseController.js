@@ -6,9 +6,51 @@ exports.index = asyncHandler(async (req, res, next) => {
 })
 
 exports.list = asyncHandler(async function(req, res, next) {
+  var tot_income = 0;
+  var tot_expenditure = 0;
   user_transactions = await Transaction.find({user : req.current_user}).sort('-date').exec();
-  console.log(req.session.successMessage);
-  res.render('list_expense', { title: 'Expenses List',  successMessage: req.session.successMessage, expense_list : user_transactions, errorMessage: req.session.errorMessage});
+  user_transactions.forEach(tr => {
+    if (tr.type === 'income') {
+      tot_income += tr.amount;
+    } else if (tr.type === 'expenditure') {
+      tot_expenditure += tr.amount;
+    }
+  })
+  res.render('list_expense', { title: 'Expenses List',  successMessage: req.session.successMessage, 
+    expense_list : user_transactions, total_income: tot_income, total_expenditure: tot_expenditure, errorMessage: req.session.errorMessage});
+})
+
+exports.list_post = asyncHandler(async function(req, res, next) {
+  console.log(req.body);
+  const query = {};
+  if (req.body.fromDate){
+    query.date = query.date || {};
+    query.date.$gte = new Date(req.body.fromDate);
+  }
+  if (req.body.toDate){
+    query.date = query.date || {};
+    query.date.$lte = new Date(req.body.toDate);
+  }
+  if (req.body.category){
+    query.category = req.body.category
+  }
+  if (req.body.transactionType){
+    query.type = req.body.transactionType;
+  }
+  var tot_income = 0;
+  var tot_expenditure = 0;
+  user_transactions = await Transaction.find(query).sort('-date').exec();
+  user_transactions.forEach(tr => {
+    if (tr.type === 'income') {
+      tot_income += tr.amount;
+    } else if (tr.type === 'expenditure') {
+      tot_expenditure += tr.amount;
+    }
+  })
+  console.log(query)
+  res.render('list_expense', { title: 'Expenses List',  successMessage: req.session.successMessage, fromDate: req.body.fromDate, toDate: req.body.toDate,
+    category: query.category, transactionType: query.type, expense_list : user_transactions, total_income: tot_income, 
+    total_expenditure: tot_expenditure, errorMessage: req.session.errorMessage});
 })
 
 exports.add_get = asyncHandler(async (req, res, next) => {

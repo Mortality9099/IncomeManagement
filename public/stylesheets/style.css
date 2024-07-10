@@ -27,6 +27,14 @@ a {
   padding: 50px;
   align-items: center;
   justify-content: center;
+  
+}
+
+.Search_Box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .inpTxt {
@@ -60,4 +68,23 @@ a {
 a {
   color: rgb(20, 20, 238);
   text-decoration: none;
+}
+
+label {
+  display: block;
+  margin-bottom: 8px;
+}
+input {
+  display: block;
+  margin-bottom: 16px;
+  padding: 8px;
+}
+
+select {
+  width: 200px;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            background-color: #f9f9f9;
+            font-size: 16px;
 }
