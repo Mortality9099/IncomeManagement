@@ -16,6 +16,7 @@ const mongoose = require('mongoose');
 var expenseRouter = require('./routes/expense');
 var userRouter = require('./routes/user')
 var homeRouter = require('./routes/home');
+var categoryRouter = require('./routes/category');
 
 const dbUrl = 'mongodb://127.0.0.1:27017/Project';
 const conn = mongoose.connect(dbUrl)
@@ -46,6 +47,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', homeRouter); 
 app.use('/expense', expenseRouter); 
 app.use('/user', userRouter); 
+app.use('/category', categoryRouter);
 
 
 // catch 404 and forward to error handler

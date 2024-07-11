@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const Transaction = require('../models/transaction')
+const Category = require('../models/category')
 
 exports.index = asyncHandler(async (req, res, next) => {
   res.redirect('/expense/list');
@@ -8,7 +9,8 @@ exports.index = asyncHandler(async (req, res, next) => {
 exports.list = asyncHandler(async function(req, res, next) {
   var tot_income = 0;
   var tot_expenditure = 0;
-  user_transactions = await Transaction.find({user : req.current_user}).sort('-date').exec();
+  user_transactions = await Transaction.find({user : req.current_user}).sort('-date').populate('category').exec();
+  var user_categories = await Category.find({user : req.current_user}).exec();
   user_transactions.forEach(tr => {
     if (tr.type === 'income') {
       tot_income += tr.amount;
@@ -16,12 +18,11 @@ exports.list = asyncHandler(async function(req, res, next) {
       tot_expenditure += tr.amount;
     }
   })
-  res.render('list_expense', { title: 'Expenses List',  successMessage: req.session.successMessage, 
+  res.render('list_expense', { title: 'Expenses List',  successMessage: req.session.successMessage, user_categories: user_categories, 
     expense_list : user_transactions, total_income: tot_income, total_expenditure: tot_expenditure, errorMessage: req.session.errorMessage});
 })
 
 exports.list_post = asyncHandler(async function(req, res, next) {
-  console.log(req.body);
   const query = {};
   if (req.body.fromDate){
     query.date = query.date || {};
@@ -39,7 +40,8 @@ exports.list_post = asyncHandler(async function(req, res, next) {
   }
   var tot_income = 0;
   var tot_expenditure = 0;
-  user_transactions = await Transaction.find(query).sort('-date').exec();
+  var user_categories = await Category.find({user : req.current_user}).exec();
+  user_transactions = await Transaction.find(query).sort('-date').populate('category').exec();
   user_transactions.forEach(tr => {
     if (tr.type === 'income') {
       tot_income += tr.amount;
@@ -47,14 +49,13 @@ exports.list_post = asyncHandler(async function(req, res, next) {
       tot_expenditure += tr.amount;
     }
   })
-  console.log(query)
   res.render('list_expense', { title: 'Expenses List',  successMessage: req.session.successMessage, fromDate: req.body.fromDate, toDate: req.body.toDate,
-    category: query.category, transactionType: query.type, expense_list : user_transactions, total_income: tot_income, 
+    category: query.category, transactionType: query.type, expense_list : user_transactions, total_income: tot_income, user_categories: user_categories,
     total_expenditure: tot_expenditure, errorMessage: req.session.errorMessage});
 })
 
 exports.add_get = asyncHandler(async (req, res, next) => {
-  user_categories = req.current_user.categories;
+  user_categories = await Category.find({user : req.current_user}).exec();
   res.render('add_expense', { title: 'Add Expense', user_categories: user_categories});
 })
 
@@ -98,8 +99,8 @@ exports.delete = asyncHandler(async (req, res, next) => {
 exports.edit_get = asyncHandler(async (req, res, next) => {
   
   expense = await Transaction.findOne({user: req.current_user, _id : req.params.id}).exec();
-  user_categories = req.current_user.categories;
-
+  user_categories = await Category.find({user : req.current_user}).exec();
+  console.log(expense)
   if(expense)
     res.render('edit_expense', { title: 'Edit Expense', user_categories: user_categories, expense: expense});
   else
@@ -111,8 +112,9 @@ exports.edit_post = asyncHandler(async (req, res, next) => {
   expense = await Transaction.findOne({user: req.current_user, _id : req.params.id}).exec();
   if(expense){
       req.current_user.total_balance -= expense.type == "income" ? expense.amount : -expense.amount;
-
+      
       expense.name = req.body.name; 
+      expense.date = req.body.date;
       expense.amount = req.body.amount;
       expense.category = req.body.category;
       expense.type  = req.body.type;

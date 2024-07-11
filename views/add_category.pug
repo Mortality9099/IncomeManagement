@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    
+    form.container(style="flex-direction: column; gap:20px;" action=`/category/add/`, method='POST')
+        h3="Name:"
+        input.inpTxt(type="text" name="name" required)
+
+        input.btn(type="submit" value="Submit")

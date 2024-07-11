@@ -1,0 +1,30 @@
+extends layout
+
+block content
+    div.container
+        if errorMessage
+        label(style="color: #aa5545") #{errorMessage}
+        if successMessage 
+        label(style="color: #24aa42") #{successMessage}          
+        table.expenseList
+            th="Remove"
+            th="Edit"
+            th="Name"
+            tr  
+            each category in category_list
+              tr
+                td
+                  a(href=`/category/delete/${category._id}`)
+                      span(style="font-size:1vw") &#x1F5D1
+                    
+                td
+                    a(href=`/category/edit/${category._id}`)
+                        span(style="font-size:2vw; color: #aaaa25;") &#9998;
+                                
+                td=category.name 
+
+        div.buttons
+            a(href="/expense/list")
+                input.btn(style="cursor:pointer; height: 5vh; width: 10vw; text-align:center; background-color: orange" type="button" value="Expenses")
+            a(href="/category/add")
+                input.btn(style="cursor:pointer; height: 5vh; width: 10vw; text-align:center; background-color: green" type="button" value="Add Category")

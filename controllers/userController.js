@@ -62,7 +62,7 @@ exports.signup_post = asyncHandler(async (req, res, next) => {
     new_user.save();
     
     req.session.successMessage = "Sign Up Was Successful!"
-    res.redirect('/login'); 
+    res.redirect('/user/login'); 
   } catch (error) {
     console.error(error);
     res.status(500).send('Internal Server Error');

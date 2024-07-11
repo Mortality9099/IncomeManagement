@@ -16,6 +16,8 @@ block content
             option(value="income")='Income'
             option(value="expenditure")='Expenditure'
         h3="Categroy:"
-        input.inpTxt(type="text" name="category")
+        select(name="category")
+            each category in user_categories
+                option(value=category._id)=category.name 
 
         input.btn(type="submit" value="Submit")

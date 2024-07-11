@@ -1,0 +1,9 @@
+extends layout
+
+block content
+    
+    form.container(style="flex-direction: column; gap:20px;" action=`/category/edit/${category._id}`, method='POST')
+        h3="Name:"
+        input.inpTxt(type="text" name="name" value=category.name required)
+
+        input.btn(type="submit" value="Submit")

@@ -9,7 +9,7 @@ const TransactionSchema = new mongoose.Schema({
         required: true,
       },
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
-    category: {type: String}
+    category: {type: mongoose.Schema.Types.ObjectId, ref: 'Category', required: true}
 });
 
 const Transaction = mongoose.model('Transaction', TransactionSchema);

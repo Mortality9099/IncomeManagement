@@ -8,7 +8,10 @@ block content
             label(for="toDate") To Date
             input(type="month" name="toDate" value=toDate)
             label(for="category") Category
-            input(type="text" name="category" value=category)
+            select(name="category")
+                option(value="") Select an option
+                each cat_ in user_categories
+                    option(value=cat_._id selected=(cat_._id == category ? "true" : null))=cat_.name 
             label(for="transactionType") Transaction Type
             select(name="transactionType")
                 option(value="") Select an option
@@ -45,7 +48,7 @@ block content
                                 
                 td=expense.name 
                 td=expense.type
-                td=expense.category
+                td=expense.category.name 
                 td=expense.date.toLocaleString("en-US")
                 tr
             tfoot 
@@ -54,8 +57,8 @@ block content
                     td Total Income 
                     td=total_expenditure
                     td Total expenditure
-
-        a(href="/expense/add")
-            input.btn(style="font-size:3vh; background-color: #225522; cursor:pointer; height: 5vh; width: 5vh; text-align:center;" type="button" value="+")
-        a(href="/user/logout")
-            input.btn(style="cursor:pointer; height: 5vh; width: 10vw; text-align:center;" type="button" value="Log Out")
+        div.buttons
+            a(href="/category/list")
+                input.btn(style="cursor:pointer; height: 5vh; width: 10vw; text-align:center; background-color: orange" type="button" value="Categories")
+            a(href="/expense/add")
+                input.btn(style="cursor:pointer; height: 5vh; width: 10vw; text-align:center; background-color: green" type="button" value="Add Expense")

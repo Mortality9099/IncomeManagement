@@ -5,6 +5,8 @@ block content
     form.container(style="flex-direction: column; gap:20px;" action=`/expense/edit/${expense._id}`, method='POST')
         h3="Name:"
         input.inpTxt(type="text" name="name" value=expense.name required)
+        h3="Date:"
+        input(type="date" name="date" value=expense.date.toISOString().substring(0, 10)  required)
         h3="Amount:"
         span(style="display:flex; gap:10px")
             label(for="amount")="$"
@@ -14,6 +16,8 @@ block content
             option(value="income" selected=(expense.type === "income" ? "true" : null))='Income'
             option(value="expenditure" selected=(expense.type === "expenditure" ? "true" : null))='Expenditure'
         h3="Categroy:"
-        input.inpTxt(type="text" name="category" value=expense.category)
+        select(name="category")
+            each category in user_categories
+                option(value=category._id selected=(category._id == expense.category ? "true" : null))=category.name 
 
         input.btn(type="submit" value="Submit")
